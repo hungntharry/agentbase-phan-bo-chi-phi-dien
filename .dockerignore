@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+.env
+.git
+*.xlsx
+*.pdf
+*.jpg
+*.png
+backup*
+~$*
