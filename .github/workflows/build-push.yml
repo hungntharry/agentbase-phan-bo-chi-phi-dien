@@ -1,0 +1,18 @@
+name: Build and Push to GreenNode CR
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to CR
+        run: echo "${{ secrets.CR_PASSWORD }}" | docker login ${{ secrets.CR_REGISTRY }} -u ${{ secrets.CR_USERNAME }} --password-stdin
+      - name: Build
+        run: docker build --platform linux/amd64 -t ${{ secrets.CR_REGISTRY }}/${{ secrets.CR_REPO }}/phan-bo-chi-phi-dien:latest .
+      - name: Push
+        run: docker push ${{ secrets.CR_REGISTRY }}/${{ secrets.CR_REPO }}/phan-bo-chi-phi-dien:latest
